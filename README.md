@@ -4,8 +4,6 @@ Intentionally vulnerable Flask app for the DevSecOps workshop.
 **Do not deploy. All secrets are fake.**
 
 - Students: follow `LAB-GUIDE.md`.
-- Instructor: run `./setup-kali.sh` on Kali to rehearse the labs locally.
-- `solutions/` holds the ready-made workflow files for each lab.
 
 ## Run locally (optional)
 
