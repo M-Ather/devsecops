@@ -1,6 +1,6 @@
 # DevSecOps Workshop Lab: Vulnerable Notes App
 
-Intentionally vulnerable Flask app for the Bahria University Karachi DevSecOps workshop.
+Intentionally vulnerable Flask app for the DevSecOps workshop.
 **Do not deploy. All secrets are fake.**
 
 - Students: follow `LAB-GUIDE.md`.
