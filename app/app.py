@@ -35,7 +35,7 @@ _conn.commit()
 
 @app.route("/")
 def index():
-    return "DevSecOps Workshop App - Bahria University"
+    return "DevSecOps Workshop App"
 
 
 @app.route("/health")
