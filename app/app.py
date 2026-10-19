@@ -1,14 +1,3 @@
-"""Tiny notes app used for the DevSecOps workshop.
-
-WARNING: This app is INTENTIONALLY VULNERABLE. Never deploy it.
-Planted issues (for the labs):
-  1. Hardcoded (fake) API key            -> Lab 1 (secrets)
-  2. SQL injection in /search            -> Lab 2 (SAST)
-  3. Reflected XSS in /hello             -> Lab 2 (SAST)
-  4. Debug mode + bind to 0.0.0.0        -> Lab 2 (SAST)
-  5. Old vulnerable dependencies         -> Lab 3 (SCA)
-  6. Old base image, root user           -> Lab 4 (container)
-"""
 import sqlite3
 
 from flask import Flask, request
@@ -22,14 +11,14 @@ DB_PATH = ":memory:"
 
 
 def get_db():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH, check_same_thread=False)
     conn.execute("CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, title TEXT, body TEXT)")
     return conn
 
 
 _conn = get_db()
-_conn.execute("INSERT INTO notes (title, body) VALUES ('welcome', 'hello from the workshop')")
-_conn.execute("INSERT INTO notes (title, body) VALUES ('secret', 'admin-only note')")
+_conn.execute("INSERT INTO notes (title, body) VALUES ('welcome', 'Hello from the workshop')")
+_conn.execute("INSERT INTO notes (title, body) VALUES ('secret', 'Secret Admin Note')")
 _conn.commit()
 
 
@@ -47,10 +36,11 @@ def health():
 def search():
     # Lab 2: SQL injection (string concatenation)
     term = request.args.get("q", "")
+    if not term:
+      return {"results":[]}
     query = "SELECT title, body FROM notes WHERE title LIKE '%" + term + "%'"
     rows = _conn.execute(query).fetchall()
     return {"results": rows}
-
 
 @app.route("/hello")
 def hello():
